@@ -1,0 +1,12 @@
+.cardWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.text {
+  font-size: 18px;
+  line-height: 1.3;
+  color: #c4c5c5;
+}
