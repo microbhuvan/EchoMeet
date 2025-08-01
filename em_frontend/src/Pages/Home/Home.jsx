@@ -10,7 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   function startRegister() {
-    navigate("/register");
+    navigate("/auth");
   }
 
   return (
