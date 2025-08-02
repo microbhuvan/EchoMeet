@@ -10,7 +10,7 @@ const steps = {
 };
 
 const Auth = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const Step = steps[step];
 
   function onNext() {
