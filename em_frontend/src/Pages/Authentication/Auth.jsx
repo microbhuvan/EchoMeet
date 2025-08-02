@@ -17,12 +17,7 @@ const Auth = () => {
     setStep((step) => step + 1);
   }
 
-  return (
-    <div>
-      authpages
-      <Step onNext={onNext} />
-    </div>
-  );
+  return <Step onNext={onNext} />;
 };
 
 export default Auth;

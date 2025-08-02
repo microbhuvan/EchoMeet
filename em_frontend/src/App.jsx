@@ -25,12 +25,12 @@ const SemiProtectedRoute = ({ children }) => {
   //if user is not logged in and not activated redirect to home page
   return isAuth ? (
     user.isActivated ? (
-      <Navigate to="/rooms" />
+      <Navigate to="/rooms" replace />
     ) : (
       children
     )
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/" replace />
   );
 };
 
@@ -42,10 +42,10 @@ const ProtectedRoute = ({ children }) => {
     user.isActivated ? (
       children
     ) : (
-      <Navigate to="/activate" />
+      <Navigate to="/activate" replace />
     )
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/" replace />
   );
 };
 
@@ -54,6 +54,8 @@ function App() {
     <div>
       <Navigation />
       <Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+
         {/* GUEST ROUTES */}
         {/* so here the home should go under conditional checks for login*/}
         <Route

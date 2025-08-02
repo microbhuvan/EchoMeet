@@ -13,12 +13,21 @@ const Home = () => {
     navigate("/auth");
   }
 
+  const logoDim = {
+    width: "25px",
+    height: "35px",
+  };
+
   return (
     <div className={styles.cardWrapper}>
-      <Card title="Welcome to Echomeet" icon="Echomeet icon.png">
+      <Card
+        title="Welcome to Echomeet"
+        icon="Echomeet icon.png"
+        logoDim={logoDim}
+      >
         <pre className={styles.text}>{description}</pre>
         <div>
-          <Button onClick={startRegister} text="Get your username"></Button>
+          <Button onClick={startRegister} text="Let's get started"></Button>
         </div>
         <div>
           <span>Have an Invite Text? </span>
