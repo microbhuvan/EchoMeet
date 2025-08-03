@@ -1,5 +1,7 @@
 const otpService = require("../services/otp-service");
 const hashService = require("../services/hash-service");
+const userService = require("../services/user-service");
+const tokenService = require("../services/token-service");
 
 class AuthController {
   async sendOtp(req, res) {
@@ -39,6 +41,7 @@ class AuthController {
 
     const [hashedOtp, expires] = hash.split(".");
     if (Date.now() > +expires) {
+      //converts string to number
       return res.status(400).json({ message: "OTP has expired" });
     }
 
@@ -50,8 +53,27 @@ class AuthController {
     }
 
     let user;
-    let accessToken;
-    let refreshToken;
+
+    try {
+      user = await userService.findUser({ phone: phone });
+      if (!user) {
+        user = await userService.createUser({ phone: phone });
+      }
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: "DB error" });
+    }
+
+    const { accessToken, refreshToken } = await tokenService.generateTokens({
+      _id: user._id,
+      activated: false,
+    });
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 7, //millisecond * 1 minute * 1 hour * 1 day * 7 days
+      httpOnly: true,
+    });
+
+    res.json({ accessToken });
   }
 }
 
