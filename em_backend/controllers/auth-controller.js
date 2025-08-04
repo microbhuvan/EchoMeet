@@ -21,10 +21,10 @@ class AuthController {
     const fullHash = `${hash}.${expires}`;
 
     try {
-      await otpService.sendBySms(phone, otp);
+      //await otpService.sendBySms(phone, otp);
       return res
         .status(200)
-        .json({ hash: fullHash, phone, message: "OTP sent successfully" });
+        .json({ hash: fullHash, phone, otp, message: "OTP sent successfully" });
     } catch (err) {
       return res
         .status(500)
