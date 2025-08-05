@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styles from "./Phone.module.css";
 import { sendOtp } from "../../../../http/index";
+import { useDispatch } from "react-redux";
+import { setOtp } from "../../../../store/authSlice";
 
 import Card from "../../../../components/shared/Card/Card";
 import Button from "../../../../components/shared/Button/Button";
@@ -8,6 +10,7 @@ import TextInput from "../../../../components/shared/TextInput/TextInput";
 
 const Phone = ({ onNext }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const dispatch = useDispatch();
 
   const logoDim = {
     width: "44px",
@@ -17,7 +20,9 @@ const Phone = ({ onNext }) => {
   async function submit() {
     const res = await sendOtp({ phone: phoneNumber });
     console.log(res);
-    //onNext();
+    const { data } = res;
+    dispatch(setOtp({ phone: data?.phone, hash: data?.hash }));
+    onNext();
   }
 
   return (

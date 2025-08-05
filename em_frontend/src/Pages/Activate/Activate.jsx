@@ -7,7 +7,6 @@ import StepUsername from "../Steps/StepUsername/StepUsername";
 const steps = {
   1: StepName,
   2: StepAvatar,
-  3: StepUsername,
 };
 
 const Activate = () => {
