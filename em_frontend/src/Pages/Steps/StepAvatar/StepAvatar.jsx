@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAvatar } from "../../../store/activationSlice";
 import { activate } from "../../../http/index";
+import { setAuth } from "../../../store/authSlice";
 
 import Button from "../../../components/shared/Button/Button";
 import Card from "../../../components/shared/Card/Card";
@@ -28,6 +29,9 @@ const StepAvatar = ({ onNext }) => {
     try {
       const { data } = await activate({ name, avatar });
       console.log(data);
+      if (data.auth) {
+        dispatch(setAuth(data));
+      }
     } catch (err) {
       console.log(err);
     }

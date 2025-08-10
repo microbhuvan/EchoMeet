@@ -1,6 +1,6 @@
 const { User } = require("../models/user");
 
-class userService {
+class UserService {
   async findUser(filter) {
     const user = await User.findOne(filter);
     return user;
@@ -16,4 +16,4 @@ class userService {
   }
 }
 
-module.exports = new userService();
+module.exports = new UserService();

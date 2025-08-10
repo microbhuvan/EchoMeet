@@ -11,9 +11,10 @@ const corsOptions = {
   origin: ["http://localhost:5173"],
 };
 app.use(cors(corsOptions));
+app.use("/storage", express.static("storage"));
 
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json({ limit: "8mb" }));
 
 const router = require("./routes");
 app.use("/", router);
