@@ -1,5 +1,7 @@
 const { User } = require("../models/user");
 
+//data transfer object
+//job is to take care what goes from backend to client
 class UserDto {
   id;
   phone;

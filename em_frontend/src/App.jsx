@@ -8,6 +8,7 @@ import Navigation from "./components/shared/Navigation/Navigation";
 import Auth from "./Pages/Authentication/Auth";
 import Activate from "./Pages/Activate/Activate";
 import Rooms from "./Pages/Rooms/Rooms";
+import { useLoadingWithRefresh } from "./hooks/useLoadingWithRefresh";
 
 const GuestRoute = ({ children }) => {
   const auth = useSelector((state) => state.authSlice);
@@ -52,7 +53,10 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  return (
+  const { loading } = useLoadingWithRefresh();
+  return loading ? (
+    "Loading..."
+  ) : (
     <div>
       <Navigation />
       <Routes>

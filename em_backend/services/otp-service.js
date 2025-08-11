@@ -9,7 +9,7 @@ const client = twilio(accountSid, authToken);
 
 class OtpService {
   async generateOtp() {
-    const otp = crypto.randomInt(100000, 999999);
+    const otp = crypto.randomInt(100000, 999999); //random 6 digit otp
     return otp;
   }
 

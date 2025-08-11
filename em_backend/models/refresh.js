@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const refreshTokenSchema = new mongoose.Schema(
   {
-    phone: {
+    token: {
       type: String,
     },
     userId: {
@@ -15,9 +15,10 @@ const refreshTokenSchema = new mongoose.Schema(
   }
 );
 
+//models is like a node/mongoose thing used to acess methods
 const RefreshToken = mongoose.model(
-  "RefreshToken",
-  refreshTokenSchema,
-  "tokens"
+  "RefreshToken", //modelname
+  refreshTokenSchema, //schema name
+  "tokens" //collection name - defualt will be refreshtokens
 );
 module.exports = { RefreshToken };

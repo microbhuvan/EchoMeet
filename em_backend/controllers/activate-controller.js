@@ -8,11 +8,11 @@ class ActivateController {
     const { name, avatar } = req.body;
 
     if (!name || !avatar) {
-      res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ message: "All fields are required" });
     }
 
     const buffer = Buffer.from(
-      avatar.replace(/^data:image\/png;base64,/, ""),
+      avatar.replace(/^data:image\/(png|jpg|jpeg);base64,/, ""),
       "base64"
     );
 
@@ -24,14 +24,14 @@ class ActivateController {
         .resize(150, Jimp.AUTO)
         .write(path.resolve(__dirname, `../storage/${imagePath}`));
     } catch (err) {
-      res.status(500).json({ message: "server error", error: err });
+      return res.status(500).json({ message: "server error", error: err });
     }
 
     const userId = req.user._id;
     try {
       const user = await userService.findUser({ _id: userId });
       if (!user) {
-        res.status(404).json({ message: "user not found" });
+        return res.status(404).json({ message: "user not found" });
       }
 
       user.activated = true;
@@ -39,10 +39,12 @@ class ActivateController {
       user.avatar = `/storage/${imagePath}`;
       user.save();
     } catch (err) {
-      res.status(500).json({ message: "something went wrong", error: err });
+      return res
+        .status(500)
+        .json({ message: "something went wrong", error: err });
     }
 
-    res.json({ user: new UserDto(user), auth: true });
+    return res.json({ user: new UserDto(user), auth: true });
   }
 }
 

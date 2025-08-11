@@ -27,7 +27,7 @@ const StepAvatar = ({ onNext }) => {
 
   async function submit() {
     try {
-      const { data } = await activate({ name, avatar });
+      const { data } = await activate({ name, avatar: image });
       console.log(data);
       if (data.auth) {
         dispatch(setAuth(data));
