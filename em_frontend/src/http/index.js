@@ -23,22 +23,24 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     if (
       error.response.status === 401 &&
-      error.config &&
-      !error.config._isRetry
+      originalRequest &&
+      !originalRequest._isRetry
     ) {
-      originalRequest.isRetry = true;
+      originalRequest._isRetry = true;
       try {
-        const response = await axios.get(`${BASE_URL}/api/refresh`, {
+        // Try to refresh the token
+        await axios.get(`${BASE_URL}/api/refresh`, {
           withCredentials: true,
         });
 
         return api.request(originalRequest);
       } catch (err) {
-        console.log(err.message);
+        console.log("Token refresh failed:", err.message);
+        // If refresh fails, redirect to login or handle accordingly
+        // This will be handled by the component that made the request
       }
-    } else {
-      throw new Error();
     }
+    throw error;
   }
 );
 

@@ -64,8 +64,8 @@ class ActivateController {
       }
 
       await user.save();
-
-      return res.status(200).json({ user: new UserDto(user), auth: true });
+      const fuser = new UserDto(user);
+      return res.status(200).json({ user: fuser, auth: true });
     } catch (err) {
       console.log("activation error ", err);
       return res

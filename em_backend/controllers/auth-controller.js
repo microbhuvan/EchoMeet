@@ -106,13 +106,22 @@ class AuthController {
     //refreshing tokens
     const { refreshToken: refreshTokenFromCookie } = req.cookies;
 
+    if (!refreshTokenFromCookie) {
+      return res.status(401).json({ message: "No refresh token provided" });
+    }
+
     let userData;
     //jwt.verify token
     try {
       userData = await tokenService.verifyRefreshToken(refreshTokenFromCookie);
       //user data means the token contains user id and activated:false
     } catch (err) {
-      console.log(err);
+      console.log("Token verification failed:", err);
+      return res.status(401).json({ message: "Invalid refresh token" });
+    }
+
+    if (!userData || !userData._id) {
+      return res.status(401).json({ message: "Invalid token data" });
     }
 
     //checking if token is in db
@@ -122,7 +131,7 @@ class AuthController {
         refreshTokenFromCookie
       );
 
-      if (!token) {
+      if (!token || token.length === 0) {
         return res.status(401).json({ message: "invalid token" });
       }
     } catch (err) {
@@ -130,7 +139,7 @@ class AuthController {
     }
 
     //cheking if the user connected to token exists
-    const user = await User.find({ _id: userData._id });
+    const user = await User.findById(userData._id);
     if (!user) {
       return res.status(404).json({ message: "user not found" });
     }

@@ -19,7 +19,7 @@ const StepOtp = ({ onNext }) => {
       const res = await verifyOtp({ otp, phone, hash });
       console.log(res);
       dispatch(setAuth(res?.data));
-      //onNext();
+      onNext();
     } catch (err) {
       console.log(err);
     }

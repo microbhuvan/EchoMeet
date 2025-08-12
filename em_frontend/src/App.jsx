@@ -54,9 +54,25 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   const { loading } = useLoadingWithRefresh();
-  return loading ? (
-    "Loading..."
-  ) : (
+
+  // Show loading spinner while checking authentication
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          fontSize: "18px",
+        }}
+      >
+        Loading...
+      </div>
+    );
+  }
+
+  return (
     <div>
       <Navigation />
       <Routes>

@@ -39,6 +39,10 @@ const StepAvatar = ({ onNext }) => {
     }
   }
 
+  useEffect(() => {
+    dispatch(setAvatar(image));
+  }, []);
+
   return (
     <div className={styles.cardWrapper}>
       <Card title={`Hi ${name}`}>
