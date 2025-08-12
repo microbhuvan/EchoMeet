@@ -1,5 +1,5 @@
 import styles from "./StepAvatar.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setAvatar } from "../../../store/activationSlice";
 import { activate } from "../../../http/index";
@@ -11,6 +11,7 @@ import Card from "../../../components/shared/Card/Card";
 const StepAvatar = ({ onNext }) => {
   const { name, avatar } = useSelector((state) => state.activationSlice);
   const [image, setImage] = useState("/images/person_icon.jpg");
+
   const dispatch = useDispatch();
 
   function captureImage(e) {
@@ -27,6 +28,7 @@ const StepAvatar = ({ onNext }) => {
 
   async function submit() {
     try {
+      console.log("inside submit function");
       const { data } = await activate({ name, avatar: image });
       console.log(data);
       if (data.auth) {

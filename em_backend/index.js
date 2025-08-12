@@ -11,7 +11,8 @@ const corsOptions = {
   origin: ["http://localhost:5173"],
 };
 app.use(cors(corsOptions));
-app.use("/storage", express.static("storage"));
+app.use("/storage", express.static("storage")); //should prefiex with /storage/something
+app.use(express.static("public")); //no need to prefix directly use /something
 
 app.use(cookieParser());
 app.use(express.json({ limit: "8mb" }));

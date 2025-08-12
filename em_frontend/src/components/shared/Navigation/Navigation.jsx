@@ -1,5 +1,8 @@
+import { logout } from "../../../http";
 import styles from "./Navigation.module.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth } from "../../../store/authSlice";
 
 const Navigation = () => {
   const brandStyles = {
@@ -17,6 +20,18 @@ const Navigation = () => {
     height: "35px",
   };
 
+  const dispatch = useDispatch();
+  const { isAuth } = useSelector((state) => state.authSlice);
+
+  async function logoutUser() {
+    try {
+      const { data } = await logout();
+      dispatch(setAuth(data));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <nav className={`${styles.navbar} container`}>
       <Link to="/" style={brandStyles}>
@@ -27,6 +42,7 @@ const Navigation = () => {
         ></img>
         <span>EchoMeet</span>
       </Link>
+      {isAuth && <button onClick={logoutUser}>Logout</button>}
     </nav>
   );
 };

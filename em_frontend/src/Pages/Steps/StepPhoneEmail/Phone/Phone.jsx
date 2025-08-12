@@ -18,6 +18,7 @@ const Phone = ({ onNext }) => {
   };
 
   async function submit() {
+    if (!phoneNumber) return;
     const res = await sendOtp({ phone: phoneNumber });
     console.log(res);
     const { data } = res;

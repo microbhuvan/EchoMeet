@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
+      default: "/images/person_icon.jpg",
       required: false,
     },
     phone: {
